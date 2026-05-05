@@ -1,0 +1,29 @@
+//// 12.8 ////
+
+export LD_LIBRARY_PATH=/opt/TensorRT-10.9.0.34/lib:/usr/local/cuda-12.8/lib64:$LD_LIBRARY_PATH
+
+    /opt/TensorRT-10.9.0.34/bin/trtexec \
+    --onnx=/home/pm/Documents/CATs/BiRefNet/weights/BiRefNet_HR-matting-epoch_135.onnx \
+    --saveEngine=/home/pm/Documents/CATs/BiRefNet/weights/BiRefNet_HR-matting-epoch_135_fp32_cuda128.engine \
+    --memPoolSize=workspace:4G
+
+
+export LD_LIBRARY_PATH=/opt/TensorRT-10.9.0.34/lib:/usr/local/cuda-12.8/lib64:$LD_LIBRARY_PATH
+
+    /opt/TensorRT-10.9.0.34/bin/trtexec \
+    --onnx=/home/pm/Documents/CATs/BiRefNet/weights/BiRefNet-portrait-epoch_150.onnx \
+    --saveEngine=/home/pm/Documents/CATs/BiRefNet/weights/BiRefNet-portrait-epoch_150_fp32_cuda128.engine \
+    --memPoolSize=workspace:4G
+
+
+/////
+
+
+export PATH=/usr/local/cuda-12.8/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-12.8/lib64:$LD_LIBRARY_PATH
+
+rm -rf build && mkdir build && cd build
+cmake .. \
+    -DNUKE_ROOT=/opt/Nuke17.0v1 \
+    -DTENSORRT_ROOT=/opt/TensorRT-10.9.0.34
+make -j8
